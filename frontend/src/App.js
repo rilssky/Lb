@@ -20,7 +20,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
             <Link to="/" className="flex items-center space-x-2">
-              <Basketball className="h-8 w-8 text-orange-600" />
+              <Activity className="h-8 w-8 text-orange-600" />
               <span className="text-xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                 BasketStats
               </span>
