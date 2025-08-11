@@ -5,7 +5,7 @@ import { Button } from "./components/ui/button";
 import { Badge } from "./components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Toaster } from "./components/ui/toaster";
-import { BarChart3, Trophy, Users, Settings, Basketball, TrendingUp, Target, Award } from "lucide-react";
+import { BarChart3, Trophy, Users, Settings, Activity, TrendingUp, Target, Award } from "lucide-react";
 import StatsCard from "./components/StatsCard";
 import PlayerLeaderboard from "./components/PlayerLeaderboard";
 import AdminPanel from "./components/AdminPanel";
