@@ -16,8 +16,7 @@ const AdminPanel = () => {
   const [statType, setStatType] = useState('');
   const [statValue, setStatValue] = useState('');
   const [newPlayer, setNewPlayer] = useState({
-    name: '',
-    position: ''
+    name: ''
   });
 
   const handleUpdateStats = (e) => {
@@ -42,10 +41,10 @@ const AdminPanel = () => {
 
   const handleAddPlayer = (e) => {
     e.preventDefault();
-    if (!newPlayer.name || !newPlayer.position) {
+    if (!newPlayer.name) {
       toast({
         title: "Error",
-        description: "Please enter player name and position",
+        description: "Please enter player name",
         variant: "destructive"
       });
       return;
@@ -57,7 +56,7 @@ const AdminPanel = () => {
       className: "bg-blue-50 border-blue-200 text-blue-800"
     });
     
-    setNewPlayer({ name: '', position: '' });
+    setNewPlayer({ name: '' });
   };
 
   const StatUpdateCard = () => (
@@ -79,7 +78,7 @@ const AdminPanel = () => {
               <SelectContent>
                 {mockPlayers.map((player) => (
                   <SelectItem key={player.id} value={player.name}>
-                    {player.name} ({player.position})
+                    {player.name}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -101,6 +100,13 @@ const AdminPanel = () => {
                 <SelectItem value="rebounds">Rebounds</SelectItem>
                 <SelectItem value="steals">Steals</SelectItem>
                 <SelectItem value="blocks">Blocks</SelectItem>
+                <SelectItem value="saves">Saves</SelectItem>
+                <SelectItem value="deflections">Deflections</SelectItem>
+                <SelectItem value="turnovers">Turnovers</SelectItem>
+                <SelectItem value="fouls">Fouls</SelectItem>
+                <SelectItem value="charges">Charges Taken</SelectItem>
+                <SelectItem value="doubleDoubles">Double-Doubles</SelectItem>
+                <SelectItem value="tripleDoubles">Triple-Doubles</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -152,22 +158,6 @@ const AdminPanel = () => {
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="position">Preferred Position</Label>
-            <Select value={newPlayer.position} onValueChange={(value) => setNewPlayer({...newPlayer, position: value})}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select position" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="PG">Point Guard (PG)</SelectItem>
-                <SelectItem value="SG">Shooting Guard (SG)</SelectItem>
-                <SelectItem value="SF">Small Forward (SF)</SelectItem>
-                <SelectItem value="PF">Power Forward (PF)</SelectItem>
-                <SelectItem value="C">Center (C)</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
           <Button 
             type="submit" 
             className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 transition-all duration-200"
@@ -213,7 +203,18 @@ const AdminPanel = () => {
             {mockPlayers.map((player) => (
               <div key={player.id} className="text-center p-3 bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
                 <p className="font-medium text-gray-900 text-sm">{player.name}</p>
-                <Badge variant="outline" className="mt-1 text-xs">{player.position}</Badge>
+                <div className="mt-2 space-y-1">
+                  {player.stats.doubleDoubles > 0 && (
+                    <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+                      {player.stats.doubleDoubles} 2x2
+                    </Badge>
+                  )}
+                  {player.stats.tripleDoubles > 0 && (
+                    <Badge variant="outline" className="text-xs bg-purple-50 text-purple-700 border-purple-200">
+                      {player.stats.tripleDoubles} 3x3!
+                    </Badge>
+                  )}
+                </div>
               </div>
             ))}
           </div>

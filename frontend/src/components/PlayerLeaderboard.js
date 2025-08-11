@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { Trophy, Medal, Award, Target, Users, TrendingUp, Eye } from 'lucide-react';
+import { Trophy, Medal, Award, Target, Users, TrendingUp, Eye, Shield, Zap, AlertTriangle } from 'lucide-react';
 import { mockPlayers, calculateAverages, getLeaderboard } from '../mock/basketballData';
 
 const PlayerLeaderboard = () => {
@@ -30,6 +30,12 @@ const PlayerLeaderboard = () => {
       case 'threePointers': return player.stats.threePointers;
       case 'steals': return player.stats.steals;
       case 'blocks': return player.stats.blocks;
+      case 'saves': return player.stats.saves;
+      case 'deflections': return player.stats.deflections;
+      case 'turnovers': return player.stats.turnovers;
+      case 'fouls': return player.stats.fouls;
+      case 'charges': return player.stats.charges;
+      case 'doubleDoubles': return player.stats.doubleDoubles;
       default: return player.stats[stat];
     }
   };
@@ -53,8 +59,7 @@ const PlayerLeaderboard = () => {
                     </Link>
                   </div>
                   <p className="text-sm text-gray-500">
-                    <Badge variant="outline" className="text-xs">{player.position}</Badge>
-                    <span className="ml-2">{player.gamesPlayed} games</span>
+                    <span>{player.gamesPlayed} games played</span>
                   </p>
                 </div>
               </div>
@@ -76,14 +81,15 @@ const PlayerLeaderboard = () => {
   return (
     <div className="space-y-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7 bg-gray-100 rounded-lg">
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 bg-gray-100 rounded-lg">
           <TabsTrigger value="points" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">Points</TabsTrigger>
-          <TabsTrigger value="ppg" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">PPG</TabsTrigger>
           <TabsTrigger value="assists" className="data-[state=active]:bg-white data-[state=active]:text-green-600">Assists</TabsTrigger>
           <TabsTrigger value="rebounds" className="data-[state=active]:bg-white data-[state=active]:text-orange-600">Rebounds</TabsTrigger>
-          <TabsTrigger value="threePointers" className="data-[state=active]:bg-white data-[state=active]:text-purple-600">3-Pointers</TabsTrigger>
           <TabsTrigger value="steals" className="data-[state=active]:bg-white data-[state=active]:text-red-600">Steals</TabsTrigger>
+          <TabsTrigger value="saves" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">Saves</TabsTrigger>
           <TabsTrigger value="blocks" className="data-[state=active]:bg-white data-[state=active]:text-indigo-600">Blocks</TabsTrigger>
+          <TabsTrigger value="charges" className="data-[state=active]:bg-white data-[state=active]:text-purple-600">Charges</TabsTrigger>
+          <TabsTrigger value="doubleDoubles" className="data-[state=active]:bg-white data-[state=active]:text-yellow-600">2x2</TabsTrigger>
         </TabsList>
 
         <TabsContent value="points" className="mt-6">
@@ -91,15 +97,6 @@ const PlayerLeaderboard = () => {
             players={getLeaderboard('points')} 
             stat="points" 
             title="Total Points Leaders" 
-          />
-        </TabsContent>
-
-        <TabsContent value="ppg" className="mt-6">
-          <LeaderboardCard 
-            players={getLeaderboard('ppg')} 
-            stat="ppg" 
-            title="Points Per Game Leaders" 
-            suffix=" PPG"
           />
         </TabsContent>
 
@@ -119,14 +116,6 @@ const PlayerLeaderboard = () => {
           />
         </TabsContent>
 
-        <TabsContent value="threePointers" className="mt-6">
-          <LeaderboardCard 
-            players={getLeaderboard('threePointers')} 
-            stat="threePointers" 
-            title="Three-Pointers Made Leaders" 
-          />
-        </TabsContent>
-
         <TabsContent value="steals" className="mt-6">
           <LeaderboardCard 
             players={getLeaderboard('steals')} 
@@ -135,11 +124,35 @@ const PlayerLeaderboard = () => {
           />
         </TabsContent>
 
+        <TabsContent value="saves" className="mt-6">
+          <LeaderboardCard 
+            players={getLeaderboard('saves')} 
+            stat="saves" 
+            title="Saves Leaders" 
+          />
+        </TabsContent>
+
         <TabsContent value="blocks" className="mt-6">
           <LeaderboardCard 
             players={getLeaderboard('blocks')} 
             stat="blocks" 
             title="Blocks Leaders" 
+          />
+        </TabsContent>
+
+        <TabsContent value="charges" className="mt-6">
+          <LeaderboardCard 
+            players={getLeaderboard('charges')} 
+            stat="charges" 
+            title="Charges Taken Leaders" 
+          />
+        </TabsContent>
+
+        <TabsContent value="doubleDoubles" className="mt-6">
+          <LeaderboardCard 
+            players={getLeaderboard('doubleDoubles')} 
+            stat="doubleDoubles" 
+            title="Double-Doubles Leaders" 
           />
         </TabsContent>
       </Tabs>

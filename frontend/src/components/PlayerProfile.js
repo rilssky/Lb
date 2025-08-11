@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { ArrowLeft, User, TrendingUp, Target, Award, BarChart3 } from 'lucide-react';
+import { ArrowLeft, User, TrendingUp, Target, Award, BarChart3, Shield, Zap, AlertTriangle } from 'lucide-react';
 import { getPlayerById, calculateAverages } from '../mock/basketballData';
 
 const StatCard = ({ title, value, subtitle, icon: Icon, color = "blue" }) => {
@@ -13,7 +13,8 @@ const StatCard = ({ title, value, subtitle, icon: Icon, color = "blue" }) => {
     orange: "from-orange-500 to-orange-600",
     purple: "from-purple-500 to-purple-600",
     red: "from-red-500 to-red-600",
-    indigo: "from-indigo-500 to-indigo-600"
+    indigo: "from-indigo-500 to-indigo-600",
+    yellow: "from-yellow-500 to-yellow-600"
   };
 
   return (
@@ -74,15 +75,22 @@ const PlayerProfile = () => {
             <div>
               <h1 className="text-4xl font-bold text-gray-900 mb-2">{player.name}</h1>
               <div className="flex items-center space-x-4">
-                <Badge className="bg-orange-600 text-white px-3 py-1 text-sm">
-                  {player.position}
-                </Badge>
                 <span className="text-lg text-gray-700">
                   {player.gamesPlayed} games played
                 </span>
                 <span className="text-lg text-gray-700">
                   Season 2025
                 </span>
+                {player.stats.doubleDoubles > 0 && (
+                  <Badge className="bg-green-600 text-white px-3 py-1 text-sm">
+                    {player.stats.doubleDoubles} Double-Doubles
+                  </Badge>
+                )}
+                {player.stats.tripleDoubles > 0 && (
+                  <Badge className="bg-purple-600 text-white px-3 py-1 text-sm">
+                    {player.stats.tripleDoubles} Triple-Double{player.stats.tripleDoubles > 1 ? 's' : ''}!
+                  </Badge>
+                )}
               </div>
             </div>
           </div>
@@ -121,7 +129,7 @@ const PlayerProfile = () => {
         </div>
 
         {/* Detailed Stats */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Scoring Stats */}
           <Card className="bg-gradient-to-br from-white to-blue-50 border-0 shadow-md">
             <CardHeader>
@@ -157,7 +165,7 @@ const PlayerProfile = () => {
             <CardHeader>
               <CardTitle className="text-xl font-bold text-green-800 flex items-center gap-2">
                 <TrendingUp className="h-5 w-5" />
-                Team & Defense Statistics
+                Team & Hustle Stats
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -171,12 +179,42 @@ const PlayerProfile = () => {
                   <span className="text-xl font-bold text-green-600">{player.stats.rebounds}</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-white rounded-lg border">
+                  <span className="font-medium text-gray-700">Saves</span>
+                  <span className="text-xl font-bold text-green-600">{player.stats.saves}</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-white rounded-lg border">
+                  <span className="font-medium text-gray-700">Deflections</span>
+                  <span className="text-xl font-bold text-green-600">{player.stats.deflections}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Defense & Discipline Stats */}
+          <Card className="bg-gradient-to-br from-white to-red-50 border-0 shadow-md">
+            <CardHeader>
+              <CardTitle className="text-xl font-bold text-red-800 flex items-center gap-2">
+                <Shield className="h-5 w-5" />
+                Defense & Discipline
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-3 bg-white rounded-lg border">
                   <span className="font-medium text-gray-700">Steals</span>
-                  <span className="text-xl font-bold text-green-600">{player.stats.steals}</span>
+                  <span className="text-xl font-bold text-red-600">{player.stats.steals}</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-white rounded-lg border">
                   <span className="font-medium text-gray-700">Blocks</span>
-                  <span className="text-xl font-bold text-green-600">{player.stats.blocks}</span>
+                  <span className="text-xl font-bold text-red-600">{player.stats.blocks}</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-white rounded-lg border">
+                  <span className="font-medium text-gray-700">Charges Taken</span>
+                  <span className="text-xl font-bold text-red-600">{player.stats.charges}</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-white rounded-lg border">
+                  <span className="font-medium text-gray-700">Turnovers</span>
+                  <span className="text-xl font-bold text-orange-600">{player.stats.turnovers}</span>
                 </div>
               </div>
             </CardContent>
@@ -192,7 +230,7 @@ const PlayerProfile = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-orange-600">{averages.ppg}</div>
                 <div className="text-sm text-gray-600">Points Per Game</div>
@@ -209,9 +247,49 @@ const PlayerProfile = () => {
                 <div className="text-2xl font-bold text-purple-600">{averages.spg}</div>
                 <div className="text-sm text-gray-600">Steals Per Game</div>
               </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-red-600">{averages.tpg}</div>
+                <div className="text-sm text-gray-600">Turnovers Per Game</div>
+              </div>
             </div>
           </CardContent>
         </Card>
+
+        {/* Achievements */}
+        {(player.stats.doubleDoubles > 0 || player.stats.tripleDoubles > 0) && (
+          <Card className="mt-8 bg-gradient-to-br from-yellow-50 to-orange-50 border-0 shadow-md">
+            <CardHeader>
+              <CardTitle className="text-xl font-bold text-yellow-800 flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                Season Achievements
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-4">
+                {player.stats.doubleDoubles > 0 && (
+                  <Badge className="bg-green-600 text-white px-4 py-2 text-sm">
+                    🏀 {player.stats.doubleDoubles} Double-Double{player.stats.doubleDoubles > 1 ? 's' : ''}
+                  </Badge>
+                )}
+                {player.stats.tripleDoubles > 0 && (
+                  <Badge className="bg-purple-600 text-white px-4 py-2 text-sm">
+                    ⭐ {player.stats.tripleDoubles} Triple-Double{player.stats.tripleDoubles > 1 ? 's' : ''}!
+                  </Badge>
+                )}
+                {player.stats.charges > 3 && (
+                  <Badge className="bg-red-600 text-white px-4 py-2 text-sm">
+                    🛡️ Charge Champion ({player.stats.charges} charges)
+                  </Badge>
+                )}
+                {player.stats.saves > 15 && (
+                  <Badge className="bg-blue-600 text-white px-4 py-2 text-sm">
+                    💫 Clutch Saver ({player.stats.saves} saves)
+                  </Badge>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Note about mock data */}
         <div className="mt-8 text-center">
