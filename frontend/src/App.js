@@ -3,11 +3,11 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { Button } from "./components/ui/button";
 import { Badge } from "./components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Toaster } from "./components/ui/toaster";
 import { BarChart3, Trophy, Users, Settings, Activity, TrendingUp, Target, Award } from "lucide-react";
 import StatsCard from "./components/StatsCard";
 import PlayerLeaderboard from "./components/PlayerLeaderboard";
+import PlayerProfile from "./components/PlayerProfile";
 import AdminPanel from "./components/AdminPanel";
 import { mockPlayers, calculateAverages } from "./mock/basketballData";
 
@@ -74,7 +74,7 @@ const HomePage = () => {
             Basketball Statistics Tracker
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Track and view real-time basketball statistics for all players. 
+            Track and view basketball statistics for your friend group. 
             See who's dominating the court with comprehensive performance metrics.
           </p>
         </div>
@@ -125,12 +125,12 @@ const HomePage = () => {
           <PlayerLeaderboard />
         </div>
 
-        {/* Note about mock data */}
+        {/* Friends Group Info */}
         <div className="mt-8 text-center">
           <div className="inline-flex items-center px-4 py-2 bg-blue-50 border border-blue-200 rounded-lg">
-            <BarChart3 className="h-4 w-4 text-blue-600 mr-2" />
+            <Users className="h-4 w-4 text-blue-600 mr-2" />
             <span className="text-sm text-blue-700">
-              Currently showing mock data. Admin can update real statistics.
+              Click on any player name to view their detailed profile and statistics
             </span>
           </div>
         </div>
@@ -157,6 +157,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/player/:playerId" element={<PlayerProfile />} />
         </Routes>
         <Toaster />
       </BrowserRouter>

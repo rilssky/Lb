@@ -1,83 +1,99 @@
-// Mock data for basketball stats tracker
+// Mock data for basketball stats tracker - Friends Edition
 export const mockPlayers = [
   {
     id: 1,
-    name: "LeBron James",
+    name: "Alex Johnson",
     position: "SF",
-    gamesPlayed: 25,
+    gamesPlayed: 18,
     stats: {
-      points: 487,
-      threePointers: 45,
-      fieldGoals: 189,
-      freeThrows: 64,
-      assists: 152,
-      rebounds: 201,
-      steals: 32,
-      blocks: 18
-    }
-  },
-  {
-    id: 2,
-    name: "Stephen Curry",
-    position: "PG", 
-    gamesPlayed: 23,
-    stats: {
-      points: 521,
-      threePointers: 89,
-      fieldGoals: 178,
-      freeThrows: 76,
-      assists: 134,
-      rebounds: 98,
-      steals: 28,
+      points: 324,
+      threePointers: 28,
+      fieldGoals: 142,
+      freeThrows: 40,
+      assists: 67,
+      rebounds: 89,
+      steals: 15,
       blocks: 8
     }
   },
   {
-    id: 3,
-    name: "Giannis Antetokounmpo",
-    position: "PF",
-    gamesPlayed: 24,
+    id: 2,
+    name: "Mike Chen",
+    position: "PG", 
+    gamesPlayed: 20,
     stats: {
-      points: 612,
-      threePointers: 12,
-      fieldGoals: 245,
-      freeThrows: 110,
-      assists: 142,
-      rebounds: 287,
-      steals: 31,
-      blocks: 42
+      points: 398,
+      threePointers: 52,
+      fieldGoals: 156,
+      freeThrows: 34,
+      assists: 124,
+      rebounds: 45,
+      steals: 22,
+      blocks: 3
+    }
+  },
+  {
+    id: 3,
+    name: "Jordan Smith",
+    position: "C",
+    gamesPlayed: 17,
+    stats: {
+      points: 289,
+      threePointers: 5,
+      fieldGoals: 125,
+      freeThrows: 39,
+      assists: 34,
+      rebounds: 156,
+      steals: 12,
+      blocks: 31
     }
   },
   {
     id: 4,
-    name: "Kevin Durant",
-    position: "SF",
-    gamesPlayed: 22,
+    name: "Tyler Brown",
+    position: "SG",
+    gamesPlayed: 19,
     stats: {
-      points: 534,
-      threePointers: 67,
-      fieldGoals: 203,
-      freeThrows: 61,
-      assists: 98,
-      rebounds: 143,
-      steals: 19,
-      blocks: 26
+      points: 367,
+      threePointers: 41,
+      fieldGoals: 148,
+      freeThrows: 30,
+      assists: 58,
+      rebounds: 72,
+      steals: 18,
+      blocks: 7
     }
   },
   {
     id: 5,
-    name: "Jayson Tatum",
-    position: "SF",
-    gamesPlayed: 26,
+    name: "Sam Davis",
+    position: "PF",
+    gamesPlayed: 16,
     stats: {
-      points: 489,
-      threePointers: 78,
+      points: 256,
+      threePointers: 15,
+      fieldGoals: 98,
+      freeThrows: 45,
+      assists: 41,
+      rebounds: 128,
+      steals: 14,
+      blocks: 19
+    }
+  },
+  {
+    id: 6,
+    name: "Chris Wilson",
+    position: "SG",
+    gamesPlayed: 21,
+    stats: {
+      points: 445,
+      threePointers: 63,
       fieldGoals: 167,
-      freeThrows: 77,
-      assists: 117,
-      rebounds: 189,
-      steals: 24,
-      blocks: 15
+      freeThrows: 48,
+      assists: 89,
+      rebounds: 67,
+      steals: 25,
+      blocks: 5
     }
   }
 ];
@@ -88,8 +104,10 @@ export const calculateAverages = (player) => {
     ppg: (stats.points / gamesPlayed).toFixed(1),
     apg: (stats.assists / gamesPlayed).toFixed(1),
     rpg: (stats.rebounds / gamesPlayed).toFixed(1),
-    threePointPercentage: ((stats.threePointers / (stats.threePointers + 20)) * 100).toFixed(1),
-    fgPercentage: ((stats.fieldGoals / (stats.fieldGoals + 50)) * 100).toFixed(1)
+    spg: (stats.steals / gamesPlayed).toFixed(1),
+    bpg: (stats.blocks / gamesPlayed).toFixed(1),
+    threePointPercentage: ((stats.threePointers / (stats.threePointers + 25)) * 100).toFixed(1),
+    fgPercentage: ((stats.fieldGoals / (stats.fieldGoals + 60)) * 100).toFixed(1)
   };
 };
 
@@ -98,6 +116,12 @@ export const getLeaderboard = (stat) => {
     if (stat === 'ppg') return (b.stats.points / b.gamesPlayed) - (a.stats.points / a.gamesPlayed);
     if (stat === 'apg') return (b.stats.assists / b.gamesPlayed) - (a.stats.assists / a.gamesPlayed);
     if (stat === 'rpg') return (b.stats.rebounds / b.gamesPlayed) - (a.stats.rebounds / a.gamesPlayed);
+    if (stat === 'spg') return (b.stats.steals / b.gamesPlayed) - (a.stats.steals / a.gamesPlayed);
+    if (stat === 'bpg') return (b.stats.blocks / b.gamesPlayed) - (a.stats.blocks / a.gamesPlayed);
     return b.stats[stat] - a.stats[stat];
   });
+};
+
+export const getPlayerById = (id) => {
+  return mockPlayers.find(player => player.id === parseInt(id));
 };

@@ -53,7 +53,7 @@ const AdminPanel = () => {
     
     toast({
       title: "Player Added! 🎉",
-      description: `${newPlayer.name} has been added to the roster`,
+      description: `${newPlayer.name} has been added to the group`,
       className: "bg-blue-50 border-blue-200 text-blue-800"
     });
     
@@ -135,25 +135,25 @@ const AdminPanel = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-green-800">
           <Users className="h-5 w-5" />
-          Add New Player
+          Add New Friend
         </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleAddPlayer} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="playerName">Player Name</Label>
+            <Label htmlFor="playerName">Friend's Name</Label>
             <Input
               id="playerName"
               type="text"
               value={newPlayer.name}
               onChange={(e) => setNewPlayer({...newPlayer, name: e.target.value})}
-              placeholder="Enter player name"
+              placeholder="Enter friend's name"
               className="focus:ring-green-500 focus:border-green-500"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="position">Position</Label>
+            <Label htmlFor="position">Preferred Position</Label>
             <Select value={newPlayer.position} onValueChange={(value) => setNewPlayer({...newPlayer, position: value})}>
               <SelectTrigger>
                 <SelectValue placeholder="Select position" />
@@ -173,7 +173,7 @@ const AdminPanel = () => {
             className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 transition-all duration-200"
           >
             <Plus className="h-4 w-4 mr-2" />
-            Add Player
+            Add Friend
           </Button>
         </form>
       </CardContent>
@@ -184,7 +184,7 @@ const AdminPanel = () => {
     <div className="space-y-6">
       <div className="bg-gradient-to-r from-orange-100 to-red-100 p-6 rounded-lg border-l-4 border-orange-500">
         <h2 className="text-xl font-bold text-orange-800 mb-2">🔒 Admin Panel</h2>
-        <p className="text-orange-700">Use this panel to update player statistics and manage the roster.</p>
+        <p className="text-orange-700">Use this panel to update player statistics and manage your friend group.</p>
       </div>
 
       <Tabs defaultValue="update-stats" className="w-full">
@@ -193,7 +193,7 @@ const AdminPanel = () => {
             Update Stats
           </TabsTrigger>
           <TabsTrigger value="add-player" className="data-[state=active]:bg-white data-[state=active]:text-green-600">
-            Add Player
+            Add Friend
           </TabsTrigger>
         </TabsList>
 
@@ -208,12 +208,12 @@ const AdminPanel = () => {
 
       <Card className="bg-gradient-to-br from-gray-50 to-gray-100 border-0">
         <CardContent className="pt-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">Current Players</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">Current Friends</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {mockPlayers.map((player) => (
-              <div key={player.id} className="text-center p-3 bg-white rounded-lg shadow-sm border">
-                <p className="font-medium text-gray-900">{player.name}</p>
-                <Badge variant="outline" className="mt-1">{player.position}</Badge>
+              <div key={player.id} className="text-center p-3 bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+                <p className="font-medium text-gray-900 text-sm">{player.name}</p>
+                <Badge variant="outline" className="mt-1 text-xs">{player.position}</Badge>
               </div>
             ))}
           </div>
